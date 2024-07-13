@@ -3,13 +3,18 @@ const express = require('express')
 const router = express.Router()
 const Task = require('../../../models/task.model')
 
-
+// GET : /api/v1/tasks
 router.get('', async(req, res) => {
-    const task = await Task.find({deleted: false})
+    const find = {deleted: false}
+    if(req.query.status){
+        find.status = req.query.status
+    }
 
+    const task = await Task.find(find)
     // API
     res.json(task)
 })
+// GET : /api/v1/tasks/detail/:id
 router.get('/detail/:id', async(req, res) => {
     try {
         const id = req.params.id
