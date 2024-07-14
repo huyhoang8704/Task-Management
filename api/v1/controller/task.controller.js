@@ -1,5 +1,6 @@
 const Task = require('../models/task.model')
 const paginationHelpers = require('../../../helpers/pagination')
+const searchHelpers = require('../../../helpers/search')
 
 const index = async (req, res) => {
     // Find : http://localhost:3000/api/v1/tasks?status=finish
@@ -20,6 +21,9 @@ const index = async (req, res) => {
         req.query,
         countTasks
     )
+    // Search
+    const keyword = searchHelpers(req,find);
+
 
 
     const task = await Task.find(find).sort(sort).limit(objectPagination.limitItem)  // Lấy ra số sản phẩm trên 1 trang
