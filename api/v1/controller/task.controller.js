@@ -48,9 +48,27 @@ const detail = async (req, res) => {
     }
 
 }
+const changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.body.status
+    
+        await Task.updateOne({_id: id}, {$set: {status: status}})
+        res.json({
+            code : 200,
+            message : "Cập nhật trạng thái thành công"
+        })
+    } catch (error) {
+        res.json({
+            code : 404,
+            message : "Error"
+        })
+    }
 
+}
 
 module.exports = {
     index,
     detail,
+    changeStatus,
 }
