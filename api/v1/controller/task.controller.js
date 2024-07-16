@@ -99,6 +99,26 @@ const edit = async (req, res) => {
         })
     }
 }
+const deleteTask = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+
+        await Task.updateOne({_id: id}, {
+            deleted: true,
+            deletedAt: new Date()
+        })
+        res.json({
+            code : 200,
+            message : "Success",
+        })
+    } catch (error) {
+        res.json({
+            code : 200,
+            message : "Error!",
+        })
+    }
+} 
 
 module.exports = {
     index,
@@ -106,4 +126,5 @@ module.exports = {
     changeStatus,
     create,
     edit,
+    deleteTask,
 }

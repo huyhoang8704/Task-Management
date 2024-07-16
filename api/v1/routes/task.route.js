@@ -11,7 +11,8 @@ router.get('/detail/:id', controller.detail)
 router.patch('/change-status/:id', controller.changeStatus)
 // POST : /api/v1/tasks/create
 router.post('/create', controller.create)
-// PATCH : http://localhost:3000/api/v1/tasks/edit/66910d717d95d366bff02103
+// PATCH : http://localhost:3000/api/v1/tasks/edit/:id
 router.patch('/edit/:id', controller.edit)
-
+// DELETE : http://localhost:3000/api/v1/tasks/delete/:id
+router.delete('/delete/:id', controller.deleteTask)
 module.exports = router;
