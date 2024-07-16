@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var cors = require('cors');
 
 const database = require('./config/database')
 require('dotenv').config()
@@ -11,6 +12,8 @@ const port = process.env.PORT;
 
 // bodyParser API
 app.use(bodyParser.json())
+// CORS
+app.use(cors())
 
 // Connect DB
 database.connect();
