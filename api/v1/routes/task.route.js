@@ -10,5 +10,7 @@ router.get('/detail/:id', controller.detail)
 // PATCH : http://localhost:3000/api/v1/tasks/change-status/66910d717d95d366bff02103
 router.patch('/change-status/:id', controller.changeStatus)
 
+router.post('/create', controller.create)
+
 
 module.exports = router;

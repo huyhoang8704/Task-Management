@@ -66,9 +66,26 @@ const changeStatus = async (req, res) => {
     }
 
 }
+const create = async (req, res) => {
+    try {
+        const task = new Task(req.body)
+        const data = await task.save();
+        res.json({
+            code : 200,
+            message : "Tạo mới công việc thành công !",
+            data : data
+        })
+    } catch (error) {
+        res.json({
+            code : 404,
+            message : "Error"
+        })
+    }
+}
 
 module.exports = {
     index,
     detail,
     changeStatus,
+    create,
 }
