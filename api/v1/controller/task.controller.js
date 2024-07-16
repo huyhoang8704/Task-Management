@@ -82,10 +82,28 @@ const create = async (req, res) => {
         })
     }
 }
+const edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const task = await Task.updateOne({
+            _id: id
+        },req.body)
+        res.json({
+            code : 200,
+            message : "Success",
+        })
+    } catch (error) {
+        res.json({
+            code : 200,
+            message : "Error!",
+        })
+    }
+}
 
 module.exports = {
     index,
     detail,
     changeStatus,
     create,
+    edit,
 }

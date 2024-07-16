@@ -9,8 +9,9 @@ router.get('', controller.index)
 router.get('/detail/:id', controller.detail)
 // PATCH : http://localhost:3000/api/v1/tasks/change-status/66910d717d95d366bff02103
 router.patch('/change-status/:id', controller.changeStatus)
-
+// POST : /api/v1/tasks/create
 router.post('/create', controller.create)
-
+// PATCH : http://localhost:3000/api/v1/tasks/edit/66910d717d95d366bff02103
+router.patch('/edit/:id', controller.edit)
 
 module.exports = router;
