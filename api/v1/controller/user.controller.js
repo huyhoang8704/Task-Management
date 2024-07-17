@@ -12,7 +12,7 @@ const register = async (req , res) => {
     })
     if(existEmail){
         res.json({
-            code : 404,
+            code : 400,
             message : "Email đã tồn tại!"
         })
     } else {
@@ -43,14 +43,14 @@ const login = async (req, res) => {
     console.log(user)
     if(!user) {
         res.json({
-            code : 404,
+            code : 400,
             message : "Email không tồn tại!"
         })
         return;
     }
     if(user.password != password){
         res.json({
-            code : 404,
+            code : 400,
             message : "Bạn đã nhập sai mật khẩu !"
         })
         return;
@@ -64,6 +64,8 @@ const login = async (req, res) => {
     })
 
 }
+
+//!  Đăng nhập email và gửi mã OTP về email
 const forgotPassword = async (req, res) => {
     try {
         const email = req.body.email;
@@ -73,7 +75,7 @@ const forgotPassword = async (req, res) => {
         })
         if(!user) {
             res.json({
-                code : 404,
+                code : 400,
                 message : "Email không tồn tại!"
             })
             return;
@@ -103,12 +105,13 @@ const forgotPassword = async (req, res) => {
         })
     } catch (error) {
         res.json({
-            code : 200,
+            code : 400,
             message : "Error!",
             error : error
         })
     } 
 }
+//!  Xác thực OTP
 const otpPassword = async (req, res) => {
     try {
         const email = req.body.email
@@ -120,7 +123,7 @@ const otpPassword = async (req, res) => {
         })
         if(!result) {
             res.json({
-                code : 200,
+                code : 400,
                 message : "Mã OTP không hợp lệ!",
             })
             return;
@@ -139,7 +142,44 @@ const otpPassword = async (req, res) => {
         })
     } catch (error) {
         res.json({
+            code : 400,
+            message : "Error!",
+            error : error
+        })
+    } 
+}
+//!  Đổi mật khẩu
+const resetPassword = async (req, res) => {
+    try {
+        const password = req.body.password
+        const token = req.body.token // hoặc req.cookies.token nếu đã qua bước xác thực OTP
+        
+        const user = await User.findOne({
+            token : token
+        })
+        if(user.password === password) {
+            res.json({
+                code : 400,
+                message : "Mật khẩu giống mật khẩu cũ!",
+            })
+            return;
+        }
+    
+        await User.updateOne({
+            token : token
+        }, {
+            password : password,
+        })
+
+
+
+        res.json({
             code : 200,
+            message : "Đổi mật khẩu thành công!",
+        })
+    } catch (error) {
+        res.json({
+            code : 400,
             message : "Error!",
             error : error
         })
@@ -151,4 +191,5 @@ module.exports = {
     login,
     forgotPassword,
     otpPassword,
+    resetPassword,
 }
