@@ -109,9 +109,46 @@ const forgotPassword = async (req, res) => {
         })
     } 
 }
+const otpPassword = async (req, res) => {
+    try {
+        const email = req.body.email
+        const otp = req.body.otp
+    
+        const result = await ForgotPassword.findOne({
+            email: email,
+            otp: otp
+        })
+        if(!result) {
+            res.json({
+                code : 200,
+                message : "Mã OTP không hợp lệ!",
+            })
+            return;
+        }
+        const user = await User.findOne({
+            email: email,
+            deleted: false
+        })
+        res.cookie("token" , user.token)
+
+
+        res.json({
+            code : 200,
+            message : "Xác thực thành công!",
+            token : user.token
+        })
+    } catch (error) {
+        res.json({
+            code : 200,
+            message : "Error!",
+            error : error
+        })
+    } 
+}
 
 module.exports = {
     register,
     login,
     forgotPassword,
+    otpPassword,
 }
