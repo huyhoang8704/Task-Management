@@ -32,8 +32,39 @@ const register = async (req , res) => {
         })
     }
 }
+const login = async (req, res) => {
+    const email = req.body.email
+    const password = req.body.password
+    const user = await User.findOne({
+        email: email,
+        deleted: false
+    })
+    console.log(user)
+    if(!user) {
+        res.json({
+            code : 404,
+            message : "Email không tồn tại!"
+        })
+        return;
+    }
+    if(user.password != password){
+        res.json({
+            code : 404,
+            message : "Bạn đã nhập sai mật khẩu !"
+        })
+        return;
+    }
+    const token = user.token;
+    res.cookie("token" , token);
+    res.json({
+        code : 200,
+        message : "Đăng nhập thành công!",
+        token : token,
+    })
 
+}
 
 module.exports = {
     register,
+    login,
 }
