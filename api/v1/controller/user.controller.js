@@ -188,17 +188,10 @@ const resetPassword = async (req, res) => {
 }
 const detail = async (req, res) => {
     try {
-        const token = req.cookies.token
-        const user = await User.findOne({
-            token: token,
-            deleted: false
-        }).select("fullname email")
-
-
         res.json({
             code : 200,
             message : "Success!",
-            infor : user
+            infor : req.user
         })
     } catch (error) {
         res.json({
