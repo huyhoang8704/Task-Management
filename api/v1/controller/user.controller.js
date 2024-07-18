@@ -19,7 +19,8 @@ const register = async (req , res) => {
         const user = new User({
             fullname : req.body.fullname,
             email : req.body.email,
-            password : req.body.password
+            password : req.body.password,
+            token : generateHelper.generateRandomString(20),
         })
         const data = await user.save();
         const token = data.token
@@ -85,7 +86,7 @@ const forgotPassword = async (req, res) => {
         const objectForgotPassword = {
             email : email,
             otp : OTP,
-            timeExpire : Date.now(),
+            timeExpire : Date.now() + 180000,
         }
 
 
