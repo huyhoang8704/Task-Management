@@ -201,6 +201,26 @@ const detail = async (req, res) => {
         })
     } 
 }
+const listUser = async (req, res) => {
+    try {
+        const users = await User.find({
+            deleted : false
+        }).select("fullname email")
+
+
+        res.json({
+            code : 200,
+            message : "Lấy ra danh sách người dùng thành công!",
+            users : users
+        })
+    } catch (error) {
+        res.json({
+            code : 400,
+            message : "Error!",
+            error : error
+        })
+    } 
+}
 
 module.exports = {
     register,
@@ -209,4 +229,5 @@ module.exports = {
     otpPassword,
     resetPassword,
     detail,
+    listUser,
 }
