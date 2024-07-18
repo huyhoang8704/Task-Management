@@ -4,7 +4,13 @@ const searchHelpers = require('../../../helpers/search')
 
 const index = async (req, res) => {
     // Find : http://localhost:3000/api/v1/tasks?status=finish
-    const find = {deleted: false}
+    const find = {
+        $or: [
+            { createdBy : req.user.id },
+            { listUser : req.user.id }
+        ],
+        deleted: false
+    }
     if(req.query.status)  find.status = req.query.status
     
     // Sort : http://localhost:3000/api/v1/tasks?sortKey=title&sortValue=esc
@@ -16,7 +22,7 @@ const index = async (req, res) => {
     let objectPagination = paginationHelpers(
         {
             currentPage : 1 ,
-            limitItem : 2
+            limitItem : 20
         },
         req.query,
         countTasks
