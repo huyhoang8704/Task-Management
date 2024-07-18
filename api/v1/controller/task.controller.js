@@ -68,8 +68,10 @@ const changeStatus = async (req, res) => {
 }
 const create = async (req, res) => {
     try {
+        req.body.createdBy = req.user.id;
         const task = new Task(req.body)
         const data = await task.save();
+
         res.json({
             code : 200,
             message : "Tạo mới công việc thành công !",
