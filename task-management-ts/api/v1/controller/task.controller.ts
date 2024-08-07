@@ -1,13 +1,16 @@
 import { Express, Request, Response , Router } from "express"
 import Task from "../models/task.model";
 import paginationHelpers from "../../../helpers/pagination";
-
+import searchHelpers from "../../../helpers/search";
 
 const index  = async(req : Request, res : Response) => {
+    // Find
     const find = {
         deleted : false,
     }
     if(req.query.status) find["status"] = req.query.status
+
+    // Sort
     const sort = {}
     if(req.query.sortKey && req.query.sortValue) {
         const sortKey = req.query.sortKey.toString();
@@ -23,7 +26,8 @@ const index  = async(req : Request, res : Response) => {
         req.query,
         countTasks
     )
-
+    // Search
+    const keyword = searchHelpers(req,find);
 
 
     const tasks = await Task
