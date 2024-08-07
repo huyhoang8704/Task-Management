@@ -4,9 +4,13 @@ import Task from "../models/task.model";
 
 
 const index  = async(req : Request, res : Response) => {
-    const tasks = await Task.find({
-        deleted: false,
-    });
+    const find = {
+        deleted : false,
+    }
+    if(req.query.status) find["status"] = req.query.status
+    
+    
+    const tasks = await Task.find(find);
     res.json(tasks)
 }
 const detail = async(req : Request, res : Response) => {
