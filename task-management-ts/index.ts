@@ -18,6 +18,14 @@ app.get('/tasks', async(req : Request, res : Response) => {
     });
     res.json(tasks)
 })
+
+app.get('/tasks/detail/:id', async(req : Request, res : Response) => {
+    const task = await Task.findOne({
+        _id: req.params.id,
+        deleted: false,
+    });
+    res.json(task)
+})
  
 
 app.listen(port , () =>{
