@@ -78,15 +78,15 @@ const login = async (req : Request, res : Response) => {
 }
 const detail = async(req : Request, res : Response) => {
     try {
-        const user = await User.findOne({
-            _id: req.params.id,
-            deleted: false
-        }).select("-password -token")
-        console.log(user)
+        // const user = await User.findOne({
+        //     _id: req.params.id,
+        //     deleted: false
+        // }).select("-password -token")
+        // console.log(user)
         res.json({
             code : 200,
             message : "Success!",
-            user : user,
+            user : req["user"],
         })
     } catch (error) {
         res.json({
