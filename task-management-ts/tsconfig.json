@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-    //   "strict": true,
+      "strict": true,
       "forceConsistentCasingInFileNames": true,
       "outDir": "dist" , // Biên dịch vào folder dist
       "target": "ES6", // Cho phép biên dịch code Typescript sang kiểu ES6
