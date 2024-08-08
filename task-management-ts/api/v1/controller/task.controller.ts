@@ -63,10 +63,27 @@ const changeStatus = async (req : Request, res : Response) => {
         })
     }
 }
+const create = async (req : Request, res : Response) => {
+    try {
+        const task = new Task(req.body);
+        const data = await task.save();
+        res.json({
+            code : 200,
+            message : "Cập nhật thành công",
+            data : data
+        })
+    } catch (error) {
+        res.json({
+            code : 404,
+            message : "Error",
+        })
+    }
+}
 
 
 export  = {
     index,
     detail,
     changeStatus,
+    create,
 }

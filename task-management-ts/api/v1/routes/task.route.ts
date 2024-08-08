@@ -10,6 +10,8 @@ router.get('/detail/:id', controller.detail)
 
 router.patch('/change-status/:id', controller.changeStatus)
 
+router.post('/create', controller.create)
+
 
 
 export const taskRoute = router;
