@@ -47,9 +47,26 @@ const detail = async(req : Request, res : Response) => {
     });
     res.json(task)
 }
+const changeStatus = async (req : Request, res : Response) => {
+    try {
+        const id : string= req.params.id;
+        const status : string = req.body.status;
+        await Task.updateOne({_id: id}, {$set: {status: status}})
+        res.json({
+            code : 200,
+            message : "Cập nhật thành công",
+        })
+    } catch (error) {
+        res.json({
+            code : 404,
+            message : "Error",
+        })
+    }
+}
 
 
 export  = {
     index,
     detail,
+    changeStatus,
 }
