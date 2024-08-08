@@ -95,6 +95,24 @@ const edit = async (req : Request, res : Response) => {
         })
     }
 }
+const deleteTask = async (req : Request, res : Response) => {
+    try {
+        const id : string = req.params.id;
+        await Task.updateOne({_id: id}, {
+            deleted: true,
+            deletedAt: new Date()
+        })
+        res.json({
+            code : 200,
+            message : "Xóa thành công",
+        })
+    } catch (error) {
+        res.json({
+            code : 404,
+            message : "Error",
+        })
+    }
+}
 
 export  = {
     index,
@@ -102,4 +120,5 @@ export  = {
     changeStatus,
     create,
     edit,
+    deleteTask,
 }
